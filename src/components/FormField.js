@@ -15,7 +15,7 @@ class FormField extends Component {
 			label,
 			required = false,
 			validator = (fnc) => fnc,
-			onStageChanged = (fnc) => fnc,
+			onStateChanged = (fnc) => fnc,
 		} = this.props;
 		const { value } = e.target;
 		const { dirty } = this.state;
@@ -36,7 +36,7 @@ class FormField extends Component {
 
 		this.setState(
 			({ dirty = false }) => ({ value, errors, dirty: !dirty || dirty }),
-			() => onStageChanged(this.state)
+			() => onStateChanged(this.state)
 		);
 	};
 
@@ -88,7 +88,7 @@ FormField.propTypes = {
 	required: PropTypes.bool,
 	children: PropTypes.node,
 	validator: PropTypes.func,
-	onStageChanged: PropTypes.func,
+	onStateChanged: PropTypes.func,
 };
 
 export default FormField;

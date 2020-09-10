@@ -18,14 +18,15 @@ class PasswordField extends Component {
 		this.state = { password: '', strength: 0 };
 	}
 
-	stateChange = (state) =>
+	stateChanged = (state) => {
 		this.setState(
 			{
 				password: state.value,
 				strength: zxcvbn(state.value).score,
 			},
-			() => this.props.onStageChanged(state)
+			() => this.props.onStateChanged(state)
 		);
+	};
 
 	validatePasswordStrong = (value) => {
 		if (value.length <= this.thresholdLength)
@@ -38,7 +39,7 @@ class PasswordField extends Component {
 		const {
 			type,
 			validator,
-			onStageChanged,
+			onStateChanged,
 			children,
 			...restProps
 		} = this.props;
@@ -72,7 +73,7 @@ class PasswordField extends Component {
 					<FormField
 						type='password'
 						validator={this.validatePasswordStrong}
-						onStageChanged={this.stateChange}
+						onStateChanged={this.stateChanged}
 						{...restProps}
 					>
 						<span className='d-block form-hint'>
@@ -110,7 +111,7 @@ PasswordField.propTypes = {
 	placeholder: PropTypes.string.isRequired,
 	required: PropTypes.bool,
 	children: PropTypes.node,
-	onStageChanged: PropTypes.func,
+	onStateChanged: PropTypes.func,
 	minStrength: PropTypes.number,
 	thresholdLength: PropTypes.number,
 };
